@@ -37,6 +37,14 @@ Q = 1;
 C1 = 1;
 Tp4 = 1;
 RHX1 = 1;
+T4r = 1;
+RHX2 = 1;
+T12 = 1;
+RHR1 = 1;
+RHR2 = 1;
+T7 = 1;
+Cpast = 1;
+Rco = 1;
 
 T2 = T1- (T1-T11)/(m0*Cp*RHX1);
 
@@ -111,11 +119,24 @@ F(6) = (   L2*z1(1/z2+Cp*m0(AHR1*KHR1)-1)/nm -L1*(  z1  -0.5 * (z1-z1/nm+1) * (m
           ((1/m0-1/(Cast*m0))^2)/( Cp*(exp(-Aco*Kco* (1/(Cp*m0) - 1/(Cp*m0*Cast))) - 1 ))  -  ( Aco*Kco* exp(-Aco*Kco* (1/(Cp*m0) - 1/(Cp*m0*Cast)) )  )* ... 
           ((1/m0-1/(Cast*m0))^2)*( exp(-Aco*Kco* (1/(Cp*m0) - 1/(Cp*m0*Cast)) )  + 1 )/( Cp*(exp(-Aco*Kco* (1/(Cp*m0) - 1/(Cp*m0*Cast))) - 1 )^2) )   ...  $ECUACIÓN CORRESPONDIENTE A Dl4f4/Dm0 
      
- F(7) = k*v/g(exp(Ce*Tauo*g/K)-1) - z1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)*(AHX1*KHX1*(m0-m1)+Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1))))/ ...
-        AHR1*KHR1*Cast*Cp*m1*nm*z2*(exp(AHR2*KHR2*(Cast-1)/(m0*Cast*Cp)) - 1 )*((m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2) * (AHR1*KHR1*(L3 + Cast*L2) -AHR1*KHR1*L3*z2*( ... 
+ F(7) = K*v/g*(exp(Ce*Tauo*g/K)-1) - z1*(exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)*(AHX1*KHX1*(m0-m1)+Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1))))/ ...
+        AHR1*KHR1*Cast*Cp*m1*nm*z2*(exp(AHR2*KHR2*(Cast-1)/(m0*Cast*Cp)) - 1 )*((m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2) )* (AHR1*KHR1*(L3 + Cast*L2) -AHR1*KHR1*L3*z2*( ... 
         1 - Cast*exp(AHR2*KHR2*(Cast-1)/(m0*Cp*Cast)) ) + Cast*L2*z2*(m0*Cp - AHR1*KHR1)*( 1 - exp(AHR2*KHR2*(Cast-1)/(Cast*Cp*m0)) ) - AHR1*KHR1*Cast*(L2+L3)* ... 
         exp(AHR2*KHR2*(Cast-1)/(m0*Cp*Cast)) ) + L4*z1*(z2-1)*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)*(Cast-exp(Aco*Kco*(Cast-1)/(Cp*Cast*m0)))* (AHX1*KHX1*(m0-m1) + ...
         Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1)) ) )/(  Cast*Cp*m1*nm*z2*( exp(Aco*Kco*(Cast-1)/(Cp*m0*Cast)) - 1  )* (m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2 ) - ...
         L1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)* (AHX1*KHX1*(m0-m1) + Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1)) ) )/( Cp*m1* (m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2 ) *      
-        ( (nm-z1+nm*z1)*( m0-m2* exp(-AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) )/( m2*nm*(exp(-AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) -1 ) )  + (z2+1)  )      ...  $ECUACIÓN CORRESPONDIENTE A DJ/Dm1
-        
+        ( (nm-z1+nm*z1)*( m0-m2* exp(-AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) )/( m2*nm*(exp(-AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) -1 ) )  + (z1+1)  )      ...  $ECUACIÓN CORRESPONDIENTE A DJ/Dm1
+ 
+ F(8) = K*v/g*(exp(Ce*Tauo*g/K)-1) - L1*(exp(AHX2*KHX2*(m0-m2)/(Cp*m0*m2))*(AHX2*KHX2*(m0/m2-1)+Cp*m2*(1-exp(AHX2*KHX2*(m0-m2)/(Cp*m0*m2))))/ ...
+        Cp*(m2^2)*((exp(AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) -1 )^2) ) * (  Tast10 + (T6-Tast4)*(C1-1) - Q/Cp*m0 + (nm-z1+nm*z1)*((exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)) -1 ) * T11 + T1*(1-m0/m1) )/ ...
+        m0/m1*nm - nm*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)) )      
+
+F(9) = (  ( T1 - (T1-T11)/(m0*Cp*RHX1) )*( z1+1-z1/nm ) + (T4r-T6)*(Cast-1) - (Tast10- Q0/(m0*Cp)) )*(m0*Cp*RHX2) -   (T1-(T1-T11)/(m0*Cp*RHX1))*(z1+1) + T12
+
+F(10) = ( (Tast10- Q0/(m0*Cp)) - Cast*T4r + T6*(Cast-1) )*(m0*Cp*RHR1-2) + z1/nm*(T1-(T1-T11)/(m0*Cp*RHX1))*(m0*Cp*RHR1-2+1/z2) - T4r
+
+F(11) = ( z1*(1-z2)/(z2*nm)*(T1-(T1-T11)/(m0*Cp*RHX1)) + Cast*(T4r-T6) - Tast10 + Q0/(m0*Cp)  )*(m0*Cp*RHR2) - T4r + T7
+
+F(12) = (Tast10 - Q0/(m0*Cp))*(1-m0*Cpast*Rco) + z1*(1-z2)/(z2*nm)*(T1-(T1-T11)/(m0*Cp*RHX1))*(m0*Cpast*Rco- Cast-1) + Cast*T6
+
+
