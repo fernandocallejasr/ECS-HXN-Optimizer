@@ -1,8 +1,10 @@
 %Usamos como primera aproximación el punto [0,0]
+clear
+clc
 
-fun = @root2d;
-x0 = [0;0;0];
-
+fun = @Validacion;
+z0 = [1; 122; 0.0025; 0.05]; %T10 P10 W10 W4r 
+ 
 options = optimoptions('fsolve','Display','none','PlotFcn',@optimplotfirstorderopt);
 
-x = fsolve(fun,x0,options)
+x = fsolve(fun, z0, options)
