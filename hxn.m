@@ -1,25 +1,25 @@
 function F = hxn(x)
 
 % pa = 101325*(1-H/44330)^(5.253);
-Ma = 0.826; H = 1000;   %altura (m)
-Ta = 288.15 - 0.0065*H;      % temperatura del aire atmosf?ico 
+Ma = 0.826; H = 1000;        %altura (m)
+Ta = 288.15 - 0.0065*H;      % temperatura del aire atmosf?ico [K]
 
-thick = 0.05;      %Thickness of heat ex. fin [m]
-DHX = 7850;        %Densidad del material intercambiadores [kg/m^3]
-Ce = 0.7;          %Consumo espec?ico de combustible [kg/h/N]
-Tauo = 2;          %Tiempo de vuelo (h)
-g = 9.81;          
+thick = 0.5;            %Thickness of heat ex. fin [m]
+DHX = 7850;             %Densidad del material intercambiadores [kg/m^3]
+Ce = 0.7*(1/3600);      %Consumo espec?ico de combustible [kg/s/N]
+Tauo = 2*3600;          %Tiempo de vuelo (s)
+g = 9.81;               % [m/s^2]
 
-K = 0.5;             %lift ratio
+K = 1.1;             %lift ratio   ***REVISAR VALOR***
 
-p1 = 364.7;        %s kPa
+p1 = 364.7;          %s [kPa]
 
 pic = 1.73; pit = 6.23; nc = 0.7; nt = 0.7; nm = 0.8;           %s
-p6 = pic*p1; 
+p6 = pic*p1;                                                    %s [kPa]
 
 KHX1 = 100; KHX2 = 100; KHR1 = 100; KHR2 = 1000; Kco = 1000;    %s
 
-z1 = (pic^(0.286)-1)/nc;  z2 = nt*(1-pit^(-0.286));                %s
+z1 = (pic^(0.286)-1)/nc;  z2 = nt*(1-pit^(-0.286));             %s
 
 AHX1 = x(1);
 AHX2 = x(2);
@@ -34,48 +34,48 @@ L2 = x(10);
 L3 = x(11);
 L4 = x(12);
 
-Q = 7000; Q0 = 7000;          %s J/s
+Q = 7000; Q0 = 7000;                             %s [J/s]
 
 w10 = 0.003; w1 = 0.019; w6 = w10; w4r = w1;     %s
-dw = w1 - w10 ;               %s
-gamma = 2260.00 ;  % J/kg   calor latente de vaporizaci? del agua 
+dw = w1 - w10 ;                                  %s
+gamma = 2260.00 ;  % [J/kg]   calor latente de vaporizaci? del agua 
 
-T1 = 247.85;       %s 째C
-T11 = 40.1;        %s 째C
+T1 = 247.85 + 273.15;       %s [K]
+T11 = 40.1 + 273.15;        %s [K]
                         
-T4r = 273.15 + 235/( 7.45/log(p6/(610*(0.622/w4r+1))) - 1 );  %s
-Tp4 = T4r; Tast4 = T4r;                                            %s
-T6  = 273.15 + 235/( 7.45/log(p6/(610*(0.622/w6 +1))) - 1 );     %s
-T7 = T6;                                                           %s
-T12 = T11;                                                         %s
+T4r = 273.15 + 235/( 7.45/log(p6/(610*(0.622/w4r+1))) - 1 );     %s [K]
+Tp4 = T4r; Tast4 = T4r;                                          %s [K]
+T6  = 273.15 + 235/( 7.45/log(p6/(610*(0.622/w6 +1))) - 1 );     %s [K]
+T7 = T6;                                                         %s [K]
+T12 = T11;                                                       %s [K]
 
-Cp = 1005;                                              %s  J/kg째C
-Tast10 = 20;  T10 = Tast10 - Q0/(m0*Cp);                %s  째C
-dT =  T4r - T6;                                         %s  째C
-Cpast = Cp + (dw*gamma)/dT; Cast = Cpast/Cp;            %s
+Cp = 1005;                                              %s [J/kg캜]
+Tast10 = 20 + 273.15;  T10 = Tast10 - Q0/(m0*Cp);       %s [K]
+dT =  T4r - T6;                                         %s [K]
+Cpast = Cp + (dw*gamma)/dT; Cast = Cpast/Cp;            %s [J/kg캜]
 
 
 
-RHX1 = (m1*Cp*exp(KHX1*AHX1/(m0*Cp)) - m0*Cp*exp(KHX1*AHX1/(m1*Cp)))/...        %s
+RHX1 = (m1*Cp*exp(KHX1*AHX1/(m0*Cp)) - m0*Cp*exp(KHX1*AHX1/(m1*Cp)))/...              %s
         ( (m0*Cp*m1*Cp)*(exp(KHX1*AHX1/(m0*Cp)) - exp(KHX1*AHX1/(m1*Cp)) ) );
 
-T2 = T1- (T1-T11)/(m0*Cp*RHX1);   %s
+T2 = T1 - (T1-T11)/(m0*Cp*RHX1);   %s [K]
 
 
-RHX2 = (m2*Cp*exp(KHX2*AHX2/(m0*Cp)) - m0*Cp*exp(KHX2*AHX2/(m2*Cp)))/...        %s
+RHX2 = (m2*Cp*exp(KHX2*AHX2/(m0*Cp)) - m0*Cp*exp(KHX2*AHX2/(m2*Cp)))/...              %s
         ( (m0*Cp*m2*Cp)*(exp(KHX2*AHX2/(m0*Cp)) - exp(KHX2*AHX2/(m2*Cp)) ) );
-RHR1 = 1/(m0*Cp) + 1/(KHR1*AHR1);                                               %s
+RHR1 = 1/(m0*Cp) + 1/(KHR1*AHR1);                                                     %s
 RHR2 = (m0*Cp*exp(KHR2*AHR2/(m0*Cpast)) - m0*Cpast*exp(KHR2*AHR2/(m0*Cp)))/...
         ( (m0*Cpast*m0*Cp)*(exp(KHR2*AHR2/(m0*Cpast)) - exp(KHR2*AHR2/(m0*Cp)) ) );   %s
-Rco = (m0*Cp*exp(Kco*Aco/(m0*Cpast)) - m0*Cpast*exp(Kco*Aco/(m0*Cp)))/...             $s
+Rco = (m0*Cp*exp(Kco*Aco/(m0*Cpast)) - m0*Cpast*exp(Kco*Aco/(m0*Cp)))/...             %s
         ( (m0*Cpast*m0*Cp)*(exp(Kco*Aco/(m0*Cpast)) - exp(Kco*Aco/(m0*Cp)) ) );
 
-C1 = Cast;
+C1 = Cast;                    %s  [J/kg캜]
 
-v = Ma*sqrt(1.4*287*Ta);      %velocidad crucero 
+v = Ma*sqrt(1.4*287*Ta);      %velocidad crucero [m/s]
 
-Cpc = Cp;           
-Hu = 38729.75;      % valor calor?ico del combustible [kJ/kg]
+Cpc = Cp;                     %s   [J/kg캜]
+Hu = 38729750;      % valor calor?ico del combustible [J/kg]
 EPSc = 0.6;         % combustion effectiveness of fuel
 
 F(1) = thick*DHX*exp(Ce*Tauo*g/K) + KHX1*z1* ...
@@ -152,7 +152,7 @@ F(6) = ( L2*z1*(1/z2+Cp*m0*(AHR1*KHR1)-1)/nm -L1*(  z1  -0.5 * (z1-z1/nm+1) * (m
  F(7) = K*v/g*(exp(Ce*Tauo*g/K)-1) - z1*(exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)*(AHX1*KHX1*(m0-m1)+Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1))))/ ...
         AHR1*KHR1*Cast*Cp*m1*nm*z2*(exp(AHR2*KHR2*(Cast-1)/(m0*Cast*Cp)) - 1 )*((m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2) )* (AHR1*KHR1*(L3 + Cast*L2) -AHR1*KHR1*L3*z2*( ... 
         1 - Cast*exp(AHR2*KHR2*(Cast-1)/(m0*Cp*Cast)) ) + Cast*L2*z2*(m0*Cp - AHR1*KHR1)*( 1 - exp(AHR2*KHR2*(Cast-1)/(Cast*Cp*m0)) ) - AHR1*KHR1*Cast*(L2+L3)* ... 
-        exp(AHR2*KHR2*(Cast-1)/(m0*Cp*Cast)) ) + L4*z1*(z2-1)*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)*(Cast-exp(Aco*Kco*(Cast-1)/(Cp*Cast*m0)))* (AHX1*KHX1*(m0-m1) + ...
+        exp(AHR2*KHR2*(Cast-1)/(m0*Cp*Cast)) ) + L4*z1*(z2-3)*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)*(Cast-exp(Aco*Kco*(Cast-1)/(Cp*Cast*m0)))* (AHX1*KHX1*(m0-m1) + ...
         Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1)) ) )/(  Cast*Cp*m1*nm*z2*( exp(Aco*Kco*(Cast-1)/(Cp*m0*Cast)) - 1  )* (m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2 ) - ...
         L1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1))*(T1-T11)* (AHX1*KHX1*(m0-m1) + Cp*m0*m1*(1-exp(AHX1*KHX1*(m0-m1)/(Cp*m0*m1)) ) )/( Cp*m1* (m0-m1*exp(-AHX1*KHX1*(m0-m1)/(Cp*m0*m1)))^2 ) * ...     
         ( (nm-z1+nm*z1)*( m0-m2* exp(-AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) )/( m2*nm*(exp(-AHX2*KHX2*(m0-m2)/(Cp*m0*m2)) -1 ) )  + (z1+1)  )  ;    ...  $ECUACI횙N CORRESPONDIENTE A DJ/Dm1
@@ -168,5 +168,3 @@ F(10) = ( (Tast10- Q0/(m0*Cp)) - Cast*T4r + T6*(Cast-1) )*(m0*Cp*RHR1-2) + z1/nm
 F(11) = ( z1*(1-z2)/(z2*nm)*(T1-(T1-T11)/(m0*Cp*RHX1)) + Cast*(T4r-T6) - Tast10 + Q0/(m0*Cp)  )*(m0*Cp*RHR2) - T4r + T7;
 
 F(12) = (Tast10 - Q0/(m0*Cp))*(1-m0*Cpast*Rco) + z1*(1-z2)/(z2*nm)*(T1-(T1-T11)/(m0*Cp*RHX1))*(m0*Cpast*Rco- Cast-1) + Cast*T6;
-
-
